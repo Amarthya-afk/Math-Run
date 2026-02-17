@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: theme('colors.sky.200');
+  /* Fallback */
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
