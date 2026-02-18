@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Vector3, MathUtils } from 'three';
+import { MathUtils } from 'three';
 import { useGameStore } from '../../store/useGameStore';
 import { gameRefs } from '../../store/gameRefs';
 
@@ -97,13 +97,23 @@ export const Player = () => {
     const [lane, setLane] = useState(0); // -1, 0, 1
     const [isJumping, setIsJumping] = useState(false);
     const jumpStartTime = useRef(0);
-    const jumpStartY = useRef(0); // Track starting Y for jump
+    const jumpStartY = useRef(0);
 
-    const { isPlaying, speed, updateDistance } = useGameStore();
+    const { isPlaying, speed, updateDistance, isWaitingForInput, resumeRun } = useGameStore();
 
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (!isPlaying) return;
+
+            // Handle Input Waiting
+            if (isWaitingForInput) {
+                if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'a', 'd', 'w', ' '].includes(e.key)) {
+                    resumeRun();
+                    // Fall through to process the movement immediately
+                } else {
+                    return;
+                }
+            }
 
             if (e.key === 'ArrowLeft' || e.key === 'a') {
                 setLane((prev) => Math.max(prev - 1, -1));
@@ -112,13 +122,12 @@ export const Player = () => {
             } else if ((e.key === 'ArrowUp' || e.key === ' ' || e.key === 'w') && !isJumping) {
                 setIsJumping(true);
                 jumpStartTime.current = Date.now();
-                if (mesh.current) jumpStartY.current = mesh.current.position.y;
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isPlaying, isJumping]);
+    }, [isPlaying, isJumping, isWaitingForInput]);
 
     useFrame((state, delta) => {
         if (!isPlaying || !mesh.current) return;
@@ -141,7 +150,6 @@ export const Player = () => {
             if (timeElapsed < JUMP_DURATION) {
                 // Simple sine wave jump
                 const progress = timeElapsed / JUMP_DURATION;
-                // Base Y is 0, peak is JUMP_HEIGHT
                 mesh.current.position.y = Math.sin(progress * Math.PI) * JUMP_HEIGHT;
             } else {
                 mesh.current.position.y = 0;

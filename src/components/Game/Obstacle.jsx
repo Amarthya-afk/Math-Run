@@ -40,7 +40,10 @@ export const Obstacle = ({ position, type = 'barrier' }) => {
             // Check Lane (X)
             if (Math.abs(worldPos.x - gameRefs.playerPosition.x) < 0.8) {
                 // Check Height (Y) - for jumping
-                if (gameRefs.playerPosition.y < 1.5) { // If not jumping high enough
+                // Obstacle is 1 unit high. Player feet approx at Y+0.2.
+                // We need Y+0.2 < 1.0 for collision. So if Y > 0.8 we are safe.
+                // Using 1.1 provides good clearance margin.
+                if (gameRefs.playerPosition.y < 1.1) {
                     console.log("Collision!");
                     endGame();
                 }

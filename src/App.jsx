@@ -1,16 +1,15 @@
 import { Scene } from './components/Game/Scene';
 import { Hud } from './components/UI/Hud';
-import { MathOverlay } from './components/UI/MathOverlay';
 import { useGameStore } from './store/useGameStore';
 
 function App() {
-  const { isPlaying, isGameOver, score, startGame } = useGameStore();
+  const { isPlaying, isGameOver, score, startGame, runId } = useGameStore();
 
   return (
     <div className="w-full h-screen relative bg-sky-300">
-      <Scene />
+      <Scene key={runId} />
       <Hud />
-      <MathOverlay />
+      {/* MathOverlay removed as requested */}
 
       {/* Start Screen */}
       {!isPlaying && !isGameOver && (
@@ -27,7 +26,7 @@ function App() {
           <div className="mt-8 text-white text-xl font-bold bg-black/50 p-4 rounded-xl">
             <p>⬅️ ➡️ to Change Lanes</p>
             <p>⬆️ or Space to Jump</p>
-            <p>Answer Math Questions to Continue!</p>
+            <p>Run through the Correct Answer!</p>
           </div>
         </div>
       )}
