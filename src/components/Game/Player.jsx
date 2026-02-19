@@ -16,9 +16,11 @@ export const Human = ({ isJumping }) => {
     const rightLeg = useRef();
 
     // Materials
-    const skinMaterial = <meshStandardMaterial color="#f1c27d" />; // Skin tone
-    const shirtMaterial = <meshStandardMaterial color="#ff4500" />; // Orange Red shirt
-    const pantsMaterial = <meshStandardMaterial color="#1e90ff" />; // Dodger Blue pants
+    // Materials - Vibrant Colors
+    const skinMaterial = <meshStandardMaterial color="#FFCC80" />; // Warmer Skin tone
+    const shirtMaterial = <meshStandardMaterial color="#FF1744" />; // Bright Red/Pink shirt
+    const pantsMaterial = <meshStandardMaterial color="#00E5FF" />; // Cyan/Blue pants
+    const shoesMaterial = <meshStandardMaterial color="#FFD600" />; // Yellow shoes
 
     useFrame((state) => {
         if (!group.current) return;
@@ -80,12 +82,20 @@ export const Human = ({ isJumping }) => {
                     <boxGeometry args={[0.15, 0.8, 0.15]} />
                     {pantsMaterial}
                 </mesh>
+                <mesh position={[0, -0.85, 0.05]}>
+                    <boxGeometry args={[0.16, 0.15, 0.25]} />
+                    {shoesMaterial}
+                </mesh>
             </group>
 
             <group position={[-0.1, 1.0, 0]} ref={leftLeg}>
                 <mesh position={[0, -0.4, 0]}>
                     <boxGeometry args={[0.15, 0.8, 0.15]} />
                     {pantsMaterial}
+                </mesh>
+                <mesh position={[0, -0.85, 0.05]}>
+                    <boxGeometry args={[0.16, 0.15, 0.25]} />
+                    {shoesMaterial}
                 </mesh>
             </group>
         </group>

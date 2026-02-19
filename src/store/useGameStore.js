@@ -71,5 +71,22 @@ export const useGameStore = create((set, get) => ({
         state.endGame();
       }
     }
+  },
+
+  hitObstacle: () => {
+    const state = get();
+    if (state.isGameOver) return;
+
+    const newLives = state.lives - 1;
+    set({
+      lives: newLives,
+      feedbackMessage: "Ouch! Hit Obstacle!",
+    });
+
+    setTimeout(() => set({ feedbackMessage: null }), 1500);
+
+    if (newLives <= 0) {
+      state.endGame();
+    }
   }
 }));

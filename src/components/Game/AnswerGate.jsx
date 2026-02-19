@@ -35,13 +35,13 @@ export const AnswerGate = ({ position, option, isCorrect }) => {
             {/* Visual Gate */}
             <mesh position={[0, 1, 0]}>
                 <boxGeometry args={[1.5, 2, 0.2]} />
-                <meshStandardMaterial color={hit ? "gray" : (isCorrect ? "#4ade80" : "#ef4444")} transparent opacity={0.6} />
+                <meshStandardMaterial color={hit ? "gray" : "#2196F3"} transparent opacity={0.8} />
             </mesh>
 
             {/* Border */}
             <mesh position={[0, 1, 0]}>
                 <boxGeometry args={[1.6, 2.1, 0.1]} />
-                <meshStandardMaterial color={isCorrect ? "#166534" : "#991b1b"} wireframe />
+                <meshStandardMaterial color="#0D47A1" />
             </mesh>
 
             {/* Text */}
