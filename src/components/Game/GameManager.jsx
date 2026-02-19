@@ -1,9 +1,10 @@
 import { useFrame } from '@react-three/fiber';
 import { useGameStore } from '../../store/useGameStore';
 import { generateQuestion } from '../../utils/mathGenerator';
+import { getSegmentData } from '../../utils/trackLogic';
 import { useRef } from 'react';
 
-const SEGMENT_LENGTH = 20;
+const SEGMENT_LENGTH = 25;
 
 export const GameManager = () => {
     const { distance, setDisplayQuestion, isPlaying, waitForInput, runId } = useGameStore();
@@ -14,8 +15,19 @@ export const GameManager = () => {
         if (!isPlaying) return;
 
         const currentSegmentIndex = Math.floor(distance / SEGMENT_LENGTH);
-        // Find next multiple of 5 > currentSegmentIndex
-        const nextQuestionSegment = Math.ceil((currentSegmentIndex + 0.1) / 5) * 5;
+
+        // Lookahead: finding the next question segment
+        let nextQuestionSegment = -1;
+        // Search next 30 segments (covering 2 chunks usually)
+        for (let i = currentSegmentIndex + 1; i < currentSegmentIndex + 30; i++) {
+            if (getSegmentData(i, runId).isQuestion) {
+                nextQuestionSegment = i;
+                break;
+            }
+        }
+
+        if (nextQuestionSegment === -1) return;
+
         const distSegments = nextQuestionSegment - currentSegmentIndex;
 
         // Visual Queue: Show question early (3 segments away)
@@ -29,7 +41,6 @@ export const GameManager = () => {
             }
 
             // Behavioral Queue: Pause when very close (1 segment away)
-            // This ensures gates are visible.
             if (distSegments <= 1 && !hasPausedForCurrent.current) {
                 waitForInput();
                 hasPausedForCurrent.current = true;

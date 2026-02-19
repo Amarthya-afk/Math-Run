@@ -3,8 +3,9 @@ import { useGameStore } from '../../store/useGameStore';
 import { Obstacle } from './Obstacle';
 import { AnswerGate } from './AnswerGate';
 import { generateQuestion } from '../../utils/mathGenerator';
+import { getSegmentData } from '../../utils/trackLogic';
 
-const SEGMENT_LENGTH = 20;
+const SEGMENT_LENGTH = 25;
 const SEGMENT_COUNT = 10;
 
 export const Track = () => {
@@ -25,22 +26,15 @@ export const Track = () => {
                 const segmentIndex = currentSegmentIndex + offset;
                 const zPos = -(segmentIndex * SEGMENT_LENGTH);
 
-                // --- Deterministic Logic ---
+                // Start generating only after start line
+                if (segmentIndex < 0) return null;
 
-                // 1. Check for Question Segment (e.g., every 5th segment, starting from 5)
-                const isQuestionSegment = segmentIndex > 0 && segmentIndex % 5 === 0;
+                const { isQuestion, hasObstacle, obstacleLane } = getSegmentData(segmentIndex, runId);
 
-                // 2. Obstacles
-                // Don't spawn obstacles on question segments (to keep lanes clear)
-                // Also ensure obstacles don't block the path immediately before/after question
-                const hasObstacle = !isQuestionSegment && segmentIndex > 2 && (segmentIndex * 1234567) % 3 === 0;
-                const obstacleLane = ((segmentIndex * 87654321) % 3) - 1;
-
-                // 3. Generate Question Data
+                // Generate Question Data if needed
                 let questionData = null;
-                if (isQuestionSegment) {
-                    // Combine segmentIndex with runId to ensure different questions per run
-                    // but deterministic within the run
+                if (isQuestion) {
+                    // Unique seed for question content
                     questionData = generateQuestion(1, segmentIndex + (runId * 10000));
                 }
 
@@ -77,7 +71,7 @@ export const Track = () => {
                         )}
 
                         {/* Answer Gates */}
-                        {isQuestionSegment && questionData && (
+                        {isQuestion && questionData && (
                             <group rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
                                 {[-1, 0, 1].map((lane, idx) => {
                                     if (idx >= questionData.options.length) return null;
