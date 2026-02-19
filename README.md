@@ -4,7 +4,7 @@
 
 The player navigates a character through a colorful subway-style track, avoiding obstacles and solving math problems by running through the correct answer gates.
 
-![Math Run Gameplay](./public/screenshot.png) *(Note: Add a screenshot here later!)*
+![Math Run Gameplay](./public/screenshot.png)
 
 ## 🌟 Features
 
