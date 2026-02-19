@@ -1,16 +1,65 @@
-# React + Vite
+# 🏃‍♂️ Math Run
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Math Run** is a vibrant, 3D endless runner game designed to make learning mathematics fun and engaging, specifically tailored for autistic children.
 
-Currently, two official plugins are available:
+The player navigates a character through a colorful subway-style track, avoiding obstacles and solving math problems by running through the correct answer gates.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Math Run Gameplay](./public/screenshot.png) *(Note: Add a screenshot here later!)*
 
-## React Compiler
+## 🌟 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **Endless 3D Runner**: Infinite track generation with "Subway Surfers" style aesthetics.
+-   **Educational Mechanics**: Math questions appear every 100m. Run through the blue gate with the correct answer to score points!
+-   **Autism-Friendly Design**:
+    -   High-contrast, vibrant colors.
+    -   Simple, predictable controls.
+    -   Forgiving gameplay (lives system instead of instant game over).
+    -   Clear visual cues and feedback.
+-   **Dynamic Gameplay**:
+    -   Randomized obstacle placement (every ~25m).
+    -   Three-lane system with jump and lane-switch mechanics.
+    -   Progressive difficulty (speed increases over time).
 
-## Expanding the ESLint configuration
+## 🎮 Controls
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Action | Keyboard Key | Alternative |
+| :--- | :--- | :--- |
+| **Move Left** | `Left Arrow` | `A` |
+| **Move Right** | `Right Arrow` | `D` |
+| **Jump** | `Up Arrow` | `Space` / `W` |
+
+## 🛠️ Tech Stack
+
+-   **Framework**: [React](https://reactjs.org/) (Vite)
+-   **3D Graphics**: [Three.js](https://threejs.org/) via [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber)
+-   **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+-   **Styling**: TailwindCSS
+
+## 🚀 Getting Started
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Amarthya-afk/Math-Run.git
+    cd Math-Run
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open the game:**
+    Open your browser and navigate to `http://localhost:5173` (or the URL shown in your terminal).
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have ideas to improve accessibility or add new math topics, feel free to open an issue or pull request.
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
